@@ -60,7 +60,7 @@ public class ListNode {
     }
 
     /********************* listnod的公共类 *************************/
-    private int length() {
+    public int length() {
         int count = 0;
         ListNode l = this;
         while (null != l) {
