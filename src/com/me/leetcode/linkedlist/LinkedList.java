@@ -77,11 +77,62 @@ public class LinkedList {
         return head.next;
     }
 
+    /**
+     * 删除链表中的倒数第N个节点.
+     * 使用快慢指针
+     *
+     * @param head
+     * @param n
+     * @return
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy; // 指向slow的前一个节点
+        for (int i = 0; i < n; i++) { // 令fast和slow相隔n个节点，则当fast==null时，slow即为要删除的节点
+            if (null == fast) {
+                return head;
+            } else {
+                fast = fast.next;
+            }
+        }
+        while (null != fast) {
+            fast = fast.next;
+            slow = slow.next;
+            pre = pre.next;
+        }
+        pre.next = slow.next;
+        slow.next = null;
+        return dummy.next;
+    }
+
+    /**
+     * 两两交换链表中的节点
+     *
+     * @param head 首节点
+     * @return
+     */
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        while (null != pre.next && null != pre.next.next) {
+            ListNode curr = pre.next.next;
+            pre.next.next = curr.next;
+            curr.next = pre.next;
+            pre.next = curr;
+            pre = curr.next;
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
-        ListNode l = ListNode.buildNodes(new int[]{1, 3, 4});
+        ListNode l = ListNode.buildNodes(new int[]{1, 3, 4, 2});
         ListNode l2 = ListNode.buildNodes(new int[]{1, 2, 4});
         LinkedList list = new LinkedList();
-        ListNode ll = list.reverse(l);
+        ListNode ll = list.swapPairs(l);
         System.out.println(ll);
     }
 }

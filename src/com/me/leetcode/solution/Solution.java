@@ -29,9 +29,36 @@ public class Solution {
         return max;
     }
 
+    /**
+     * 乘最多谁的容器
+     * 使用双指针，area=(right - left) * Math.max(height[right], height[left])
+     * 当right-left缩小时，只有height[right]或height[left]增大，才可能是面积增大
+     *
+     * @param height
+     * @return
+     */
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int max = (right - left) * Math.min(height[right], height[left]);
+        while (left < right) {
+            if (height[left] < height[right]) {
+                // 右移
+//                left++;
+                ++left;
+            } else {
+//                right--;
+                --right;
+            }
+            int tmp = (right - left) * Math.min(height[left], height[right]);
+            max = Math.max(max, tmp);
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
-        CatchRains solution = new CatchRains();
-        int i = solution.trap3(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1});
+        Solution solution = new Solution();
+        int i = solution.maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7});
         System.out.println(i);
     }
 }
